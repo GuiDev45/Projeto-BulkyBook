@@ -24,5 +24,23 @@ namespace BulkyBookWeb.Controllers
         {
             return View();
         }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Criar(Categoria obj)
+        {
+            if (obj.Nome == obj.OrdemExibicao.ToString())
+            {
+                ModelState.AddModelError("nome", "The display order cannot exactly match the name");
+            }
+            if (ModelState.IsValid) 
+            { 
+                _db.Categorias.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
     }
 }
