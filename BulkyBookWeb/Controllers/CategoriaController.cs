@@ -18,5 +18,11 @@ namespace BulkyBookWeb.Controllers
             IEnumerable<Categoria> objCategoriaList = _db.Categorias;//Recupera todas as categorias da tabela
             return View(objCategoriaList);
         }
+
+        //GET
+        public IActionResult Criar()
+        {
+            return View();
+        }
     }
 }
