@@ -79,5 +79,41 @@ namespace BulkyBookWeb.Controllers
             }
             return View(obj);
         }
+
+        //GET
+        public IActionResult Deletar(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var categoriaFromDb = _db.Categorias.Find(id);
+            //var categoriaFromDbFirst = _db.Categorias.FirstOrDefault(u => u.Id == id);
+            //var categoriaFromDbSingle = _db.Categorias.SingleOrDefault(u => u.Id == id);
+
+            if (categoriaFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoriaFromDb);
+        }
+
+        //POST
+        [HttpPost,ActionName("Deletar")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletarPOST(int? id)
+        {
+            var obj = _db.Categorias.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Categorias.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+            
+        }
     }
 }
